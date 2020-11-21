@@ -40,7 +40,7 @@ class App extends React.Component{
             </TouchableOpacity>
           </View>
         <View style={{marginTop:100}}>
-          <TouchableOpacity style={{backgroundColor:'grey',justifyContent:'center'}}>
+          <TouchableOpacity style={{backgroundColor:'grey',justifyContent:'center'}} onPress={()=>this.PlayRemoteURLSoundFile()}>
             <Text style={{textAlign:'center',fontSize:20,color:'white',padding:10}}>Play sound from remote url</Text>
           </TouchableOpacity>
         </View>
@@ -50,7 +50,7 @@ class App extends React.Component{
 
     PlayLocalSoundFile = () =>{
       Sound.setCategory('Playback');
-      console.log('Play sound');
+      console.log('Play local sound');
 
       var mySound = new Sound('caterpillar.wav',Sound.MAIN_BUNDLE,(error)=>{
         if(error){
@@ -69,12 +69,35 @@ class App extends React.Component{
         
         mySound.setVolume(0.9);
         mySound.release();
-      
-      
     }
-    
-  }
 
+    PlayRemoteURLSoundFile = () =>{
+      Sound.setCategory('Playback');
+      console.log("Play remote sound");
+
+      var myRemoteSound = new Sound('https://www.soundjay.com/ambient/sounds/boarding-accouncement-1.mp3',null,(error)=>{
+        
+      if(error){
+        console.log(error);
+        return;
+      } else {
+        myRemoteSound.play((success)=>{
+          if(success){
+            console.log('Sound playing')
+          } else{
+            console.log('Issue playing file');
+          }
+        })
+      }
+      });
+      
+      myRemoteSound.setVolume(0.9);
+      myRemoteSound.release();
+    }
+}
+
+
+  
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
