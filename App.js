@@ -28,8 +28,9 @@ import {
 import Sound from 'react-native-sound';
 
 
-
 class App extends React.Component{
+
+  
   render(){
       return(
         <View>
@@ -49,6 +50,27 @@ class App extends React.Component{
 
     PlayLocalSoundFile = () =>{
       Sound.setCategory('Playback');
+      console.log('Play sound');
+
+      var mySound = new Sound('caterpillar.wav',Sound.MAIN_BUNDLE,(error)=>{
+        if(error){
+            console.log('Error loading sound: ' + error);
+            return;
+        } else {
+          mySound.play((success)=>{
+            if (success){
+              console.log('Sound playing')
+            } else{
+              console.log('Issue playing file');
+            }
+          })
+        }
+        });
+        
+        mySound.setVolume(0.9);
+        mySound.release();
+      
+      
     }
     
   }
